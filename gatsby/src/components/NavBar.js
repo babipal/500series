@@ -56,20 +56,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar() {
-  const classes = useStyles();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  return (
-    <div className={classes.root}>
-      <AppBar position="static" color="transparent" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <Link to="/" alt="500 series home">
-            <Logo width="95" height="42" />
-          </Link>
-          <Hidden smDown implementation="css">
-            <MainLinks />
-          </Hidden>
-
+/*
+TODO - search
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -83,8 +71,23 @@ export default function NavBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
+          */
 
-          <Hidden mdUp>
+export default function NavBar() {
+  const classes = useStyles();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" color="transparent" className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
+          <Link to="/" alt="500 series home">
+            <Logo width="79" height="35" />
+          </Link>
+          <Hidden smDown implementation="css">
+            <MainLinks />
+          </Hidden>
+
+          <Hidden mdUp implementation="css">
             <IconButton
               color="inherit"
               aria-label="open drawer"

@@ -1,8 +1,5 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import { Typography } from '@material-ui/core';
-// import { Link } from "gatsby"
-import { Link } from 'gatsby-theme-material-ui';
 import ProductGrid from '../components/ProductGrid';
 
 export default function ModulesPage({ data }) {
@@ -15,8 +12,10 @@ export default function ModulesPage({ data }) {
 }
 
 export const query = graphql`
-  query ProductsQuery {
-    products: allSanityProduct {
+  query ProductsQuery($slug: String) {
+    products: allSanityProduct(
+      filter: { tags: { elemMatch: { slug: { current: { eq: $slug } } } } }
+    ) {
       nodes {
         name
         id
@@ -24,21 +23,10 @@ export const query = graphql`
           current
         }
         mainImage {
-          asset {
-            fluid(maxWidth: 400) {
-              ...GatsbySanityImageFluid
-            }
-          }
+          ...ImageWithPreview
         }
         company {
           name
-          mainImage {
-            asset {
-              fluid {
-                src
-              }
-            }
-          }
         }
       }
     }

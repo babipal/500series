@@ -4,7 +4,7 @@ import Footer from './Footer';
 import NavBar from './NavBar';
 
 const useStyles = makeStyles((theme) => ({
-  body: { padding: theme.spacing(2, 3) },
+  body: { padding: theme.spacing(1) },
 }));
 
 export default function Layout({ children }) {

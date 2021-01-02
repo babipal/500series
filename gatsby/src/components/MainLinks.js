@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LeftLinks({ closer }) {
+export default function LeftLinks({ closer = () => {} }) {
   const classes = useStyles();
 
   return (
@@ -36,7 +36,7 @@ export default function LeftLinks({ closer }) {
       <li>
         <Link
           color="textPrimary"
-          to="/modules"
+          to="/modules/"
           underline="none"
           className={classes.link}
           onClick={() => closer(false)}
@@ -47,7 +47,7 @@ export default function LeftLinks({ closer }) {
       <li>
         <Link
           color="textPrimary"
-          to="/companies"
+          to="/companies/"
           underline="none"
           className={classes.link}
           onClick={() => closer(false)}

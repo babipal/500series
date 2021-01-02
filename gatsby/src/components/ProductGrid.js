@@ -1,17 +1,16 @@
 import React from 'react';
-import Img from 'gatsby-image';
+// import Img from 'gatsby-image';
+import SanityImage from 'gatsby-plugin-sanity-image';
 import { Link } from 'gatsby-theme-material-ui';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import ModulesFilter from './ModulesFilter';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   productGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
@@ -19,31 +18,65 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SingleProduct = ({ product }) => (
-  <Grid item xs={6} sm={4} md={3}>
-    <Card>
-      <CardActionArea>
-        <Link to={`/module/${product.slug.current}`}>
-          <Img fluid={product.mainImage.asset.fluid} alt={product.name} />
-        </Link>
-        <CardContent>
-          <Typography gutterBottom variant="h5">
-            {product.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            {product.company.name}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-  </Grid>
-);
+const singleStyles = makeStyles(() => ({
+  img: {
+    width: '100%',
+  },
+}));
 
-export default function ProductGrid({ products = [] }) {
+/*
+gatsby-image vs. sanity-image
+          <SanityImage
+            {...product.mainImage}
+            height={300}
+            width={300}
+            alt={product.name}
+            fit="clip"
+          />
+        </Link>
+
+        <Img fluid={product.mainImage.asset.fluid} alt={product.name} />
+*/
+export const SingleProduct = ({ product }) => {
+  const classes = singleStyles();
+
+  return (
+    <Grid item xs={6} sm={4} md={3}>
+      <Card>
+        <CardActionArea>
+          <Link to={`/module/${product.slug.current}/`}>
+            <SanityImage
+              className={classes.img}
+              {...product.mainImage}
+              height={300}
+              width={300}
+              alt={product.name}
+            />
+          </Link>
+          <CardContent>
+            <Typography gutterBottom variant="h5">
+              {product.name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              {product.company.name}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Grid>
+  );
+};
+
+export default function ProductGrid({ products = [], showFilter = true }) {
   const classes = useStyles();
 
   return (
     <Grid container spacing={4} className={classes.container}>
+      {showFilter && (
+        <Grid item xs={12}>
+          <ModulesFilter />
+        </Grid>
+      )}
       {products.map((product) => (
         <SingleProduct key={product.id} product={product} />
       ))}

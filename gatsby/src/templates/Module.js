@@ -27,6 +27,7 @@ export default function SingleModule({ data }) {
           {altImages.length > 0 && (
             <>
               <button
+                key={-1}
                 type="button"
                 className={classes.thumbnail}
                 onClick={() => setMainImgSrc(mainImage.asset.fluid)}
@@ -36,8 +37,9 @@ export default function SingleModule({ data }) {
                   alt={`${module.name} main image`}
                 />
               </button>
-              {altImages.map((img) => (
+              {altImages.map((img, index) => (
                 <button
+                  key={index}
                   type="button"
                   className={classes.thumbnail}
                   onClick={() => setMainImgSrc(img.asset.fluid)}
@@ -55,8 +57,8 @@ export default function SingleModule({ data }) {
         <Grid item xs={12} md={6}>
           <Typography variant="h2">{module.name}</Typography>
           <Typography variant="h3">{company.name}</Typography>
-          {module.description.split('\n\n').map((paragraph) => (
-            <Typography variant="body2" paragraph>
+          {module.description.split('\n\n').map((paragraph, index) => (
+            <Typography key={index} variant="body2" paragraph>
               {paragraph}
             </Typography>
           ))}
