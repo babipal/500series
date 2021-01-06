@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
   ul: {
     listStyle: 'none',
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       flexDirection: 'column',
     },
     '& li': {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('xs')]: {
         margin: theme.spacing(1),
       },
     },

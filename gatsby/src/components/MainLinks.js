@@ -59,7 +59,7 @@ export default function LeftLinks({ closer = () => {} }) {
       <li>
         <Link
           color="textPrimary"
-          to="/companies"
+          to="/articles"
           underline="none"
           className={classes.link}
           onClick={() => closer(false)}
@@ -71,7 +71,7 @@ export default function LeftLinks({ closer = () => {} }) {
       <li>
         <Link
           color="textPrimary"
-          to="/companies"
+          to="/reviews"
           underline="none"
           className={classes.link}
           onClick={() => closer(false)}

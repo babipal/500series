@@ -26,9 +26,6 @@ export default {
         // Sanity project info (required)
         projectId: 'sj9xx1i9',
         dataset: 'production',
-        defaultImageConfig: {
-          fit: 'clip',
-        },
       },
     },
   ],

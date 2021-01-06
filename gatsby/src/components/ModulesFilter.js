@@ -1,7 +1,5 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'gatsby-theme-material-ui';
 
@@ -28,6 +26,27 @@ function getTagCounts(productTags) {
 const useStyles = makeStyles((theme) => ({
   chip: {
     margin: theme.spacing(1),
+    backgroundColor: '#e0e0e0',
+    display: 'inline-flex',
+    borderRadius: theme.spacing(2),
+    color: '#000',
+    alignItems: 'center',
+    fontSize: theme.typography.pxToRem(14),
+    padding: [[6, 8]],
+    '&:hover': { textDecoration: 'none', backgroundColor: '#eee' },
+  },
+  count: {
+    color: '#666',
+    backgroundColor: '#bdbdbd',
+    height: 24,
+    width: 24,
+    textAlign: 'center',
+    borderRadius: 12,
+    fontSize: theme.typography.pxToRem(13),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
   },
 }));
 
@@ -53,16 +72,18 @@ export default function ModulesFilter() {
 
   return (
     <>
+      <Link to="/modules" className={classes.chip}>
+        All
+      </Link>
       {tags.map((tag) => (
-        <Chip
+        <Link
           key={tag.id}
-          label={tag.name}
-          avatar={<Avatar>{tag.count}</Avatar>}
-          component={Link}
-          href={`/modules/${tag.slug}/`}
+          to={`/modules/${tag.slug}/`}
           className={classes.chip}
-          clickable
-        />
+        >
+          <span className={classes.count}>{tag.count}</span>
+          {tag.name}
+        </Link>
       ))}
     </>
   );

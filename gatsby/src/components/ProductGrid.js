@@ -18,50 +18,63 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const singleStyles = makeStyles(() => ({
+const singleStyles = makeStyles((theme) => ({
+  card: {
+    padding: 16,
+    height: '100%',
+    textAlign: 'center',
+  },
   img: {
+    maxHeight: 300,
+    objectFit: 'contain',
+    height: '100%',
     width: '100%',
+  },
+  company: {
+    color: '#6f6f6f',
+    fontSize: theme.typography.pxToRem(14),
+    fontWeight: '500',
+    margin: [[theme.spacing(1), 0]],
+    '&::before': {
+      margin: '16px auto',
+      content: '""',
+      display: 'block',
+      left: '5%',
+      right: '5%',
+      width: '90%',
+      height: 1,
+      backgroundImage:
+        'linear-gradient(to right, transparent, rgb(188,188,188), transparent)',
+    },
   },
 }));
 
-/*
-gatsby-image vs. sanity-image
-          <SanityImage
-            {...product.mainImage}
-            height={300}
-            width={300}
-            alt={product.name}
-            fit="clip"
-          />
-        </Link>
-
-        <Img fluid={product.mainImage.asset.fluid} alt={product.name} />
-*/
 export const SingleProduct = ({ product }) => {
   const classes = singleStyles();
 
   return (
-    <Grid item xs={6} sm={4} md={3}>
-      <Card>
-        <CardActionArea>
-          <Link to={`/module/${product.slug.current}/`}>
-            <SanityImage
-              className={classes.img}
-              {...product.mainImage}
-              height={300}
-              width={300}
-              alt={product.name}
-            />
-          </Link>
-          <CardContent>
-            <Typography gutterBottom variant="h5">
-              {product.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              {product.company.name}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
+    <Grid item xs={12} sm={4} md={3}>
+      <Card className={classes.card}>
+        <Link to={`/module/${product.slug.current}`}>
+          <CardActionArea>
+            <div>
+              <SanityImage
+                className={classes.img}
+                {...product.mainImage}
+                height={300}
+                alt={product.name}
+              />
+            </div>
+            <CardContent>
+              <Typography className={classes.company} gutterBottom variant="h5">
+                {product.company.name}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {product.name}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Link>
       </Card>
     </Grid>
   );
