@@ -1,45 +1,73 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import SanityImage from 'gatsby-plugin-sanity-image';
+import imageUrlBuilder from '@sanity/image-url';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import ProductGrid from '../components/ProductGrid';
 
 const useStyles = makeStyles((theme) => ({
-  // TODO - this is ugly, need to implement "@sanity/image-url" and get the
-  // hero image url to use a background2
-  hero: {},
+  // TODO - pass url to this css so background image is not inline
+  hero: {
+    width: '100vw',
+    marginTop: theme.spacing(-2),
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: 400,
+    [theme.breakpoints.up('sm')]: {
+      backgroundSize: 'cover',
+      backgroundPosition: 'top',
+      padding: 120,
+    },
+    [theme.breakpoints.down('xs')]: {
+      backgroundSize: '100% 100px',
+      backgroundPosition: 'top',
+      backgroundRepeat: 'no-repeat',
+      paddingTop: 120,
+    },
+  },
   fullWidthImage: { width: '100vw', marginTop: theme.spacing(-2) },
   heroHeaders: {
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       backgroundColor: 'rgba(0,0,0,.8)',
-      display: 'table',
+      display: 'inline',
       color: 'white',
       padding: theme.spacing(2),
       margin: '0 auto',
-      position: 'relative',
-      top: -200,
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       padding: theme.spacing(1),
     },
   },
-  latestModules: { marginTop: theme.spacing(2), padding: theme.spacing(1) },
+  latestModules: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(1),
+    '& h3': { fontSize: '2rem', margin: theme.spacing(2) },
+  },
 }));
+
+// TODO - get project and dataset into a config,
+// and ultimately wrap this thing in a plugin
+const builder = imageUrlBuilder({
+  projectId: 'sj9xx1i9',
+  dataset: 'production',
+});
+
+function urlFor(source) {
+  return builder.image(source);
+}
 
 export default function HomePage({ data }) {
   const classes = useStyles();
   const { homepageContent, products } = data;
   const { primaryImage, title, subtitle } = homepageContent;
+  const imgUrl = urlFor(primaryImage).height(200).quality(35).url();
+
   return (
     <>
-      <div className={classes.hero}>
-        <SanityImage
-          {...primaryImage}
-          height={200}
-          alt={title}
-          className={classes.fullWidthImage}
-        />
+      <div
+        className={classes.hero}
+        style={{ backgroundImage: `url(${imgUrl})` }}
+      >
         <Typography variant="h3" className={classes.heroHeaders} align="center">
           {title}
         </Typography>
